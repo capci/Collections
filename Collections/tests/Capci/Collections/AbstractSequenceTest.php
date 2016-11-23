@@ -202,4 +202,85 @@ class AbstractSequenceTest extends \PHPUnit_Framework_TestCase
             $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
         }
     }
+    
+    public function testOffsetSet() {
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->object[0] = null;
+        $this->assertSame([null, 2, 3, 4, 5], $this->object->r);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->object[2] = null;
+        $this->assertSame([1, 2, null, 4, 5], $this->object->r);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->object[4] = null;
+        $this->assertSame([1, 2, 3, 4, null], $this->object->r);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->object[] = null;
+        $this->assertSame([1, 2, 3, 4, 5, null], $this->object->r);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        try {
+            $this->object[-1] = null;
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
+        }
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        try {
+            $this->object[5] = null;
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
+        }
+    }
+    
+    public function testOffsetUnset() {
+        $this->object->r = [1, 2, 3, 4, 5];
+        try {
+            unset($this->object[0]);
+            $this->fail();
+        } catch (\BadMethodCallException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
+        }
+    }
+    
+    public function testOffsetGet() {
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->assertSame(1, $this->object[0]);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->assertSame(3, $this->object[2]);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        $this->assertSame(5, $this->object[4]);
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        try {
+            $this->object[-1];
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
+        }
+        
+        $this->object->r = [1, 2, 3, 4, 5];
+        try {
+            $this->object[5];
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->r);
+        }
+    }
+    
+    public function testOffsetExists() {
+        $this->object->r = [1, 2, null, 4, 5];
+        $this->assertTrue(isset($this->object[0]));
+        $this->assertTrue(isset($this->object[3]));
+        $this->assertTrue(isset($this->object[4]));
+        $this->assertFalse(isset($this->object[-1]));
+        $this->assertFalse(isset($this->object[5]));
+        $this->assertFalse(isset($this->object[2]));
+    }
 }

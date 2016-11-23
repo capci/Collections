@@ -16,7 +16,7 @@ namespace Capci\Collections;
  * 
  * 全てのSequenceの基底インターフェースです。
  */
-interface Sequence extends Collection {
+interface Sequence extends Collection, \ArrayAccess {
     
     /**
      * このシーケンスの末尾に要素を追加します。
@@ -77,4 +77,42 @@ interface Sequence extends Collection {
      * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
      */
     public function remove(int $index);
+    
+    /**
+     * このシーケンスの指定した位置の要素を置き換えます。
+     * 
+     * 第1引数にnullを渡した場合、このシーケンスの末尾に要素を追加します。
+     * 
+     * @param int|null $index 置き換える位置。
+     * @param mixed $e 置き換える要素。
+     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
+     */
+    public function offsetSet($index, $e);
+    
+    /**
+     * シーケンスではこのメソッドはサポートされていません。
+     * 
+     * \BadMethodCallExceptionがスローされます。
+     * 
+     * @param int $index インデックス。
+     * @throws \BadMethodCallException 必ずスローされます。
+     */
+    public function offsetUnset($index);
+    
+    /**
+     * このシーケンスの指定した位置の要素を返します。
+     * 
+     * @param int $index 返される要素の位置。
+     * @return mixed 指定された位置の要素。
+     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
+     */
+    public function offsetGet($index);
+    
+    /**
+     * 指定した位置に要素が存在し、かつその要素がnullでないかを調べます。
+     * 
+     * @param int $index 調べるインデックス。
+     * @return bool 指定した位置に要素が存在し、かつその要素がnullでない場合true、そうでない場合false。
+     */
+    public function offsetExists($index);
 }

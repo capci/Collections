@@ -123,4 +123,11 @@ class ArrayList extends AbstractSequence {
         array_splice($this->array, $index, 1);
         return $ret;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($index) {
+        return isset($this->array[$index]);
+    }
 }

@@ -416,4 +416,19 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
             $this->assertSame([1, 2, 3, 4, 5], $this->object->toArray());
         }
     }
+    
+    public function testOffsetExists() {
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->assertTrue(isset($this->object[0]));
+        $this->assertTrue(isset($this->object[3]));
+        $this->assertTrue(isset($this->object[4]));
+        $this->assertFalse(isset($this->object[-1]));
+        $this->assertFalse(isset($this->object[5]));
+        $this->assertFalse(isset($this->object[2]));
+    }
 }

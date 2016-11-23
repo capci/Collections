@@ -101,4 +101,39 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
         }
         return $ret;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($index, $e) {
+        if($index === null) {
+            $this->add($e);
+        } else {
+            $this->set($index, $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($index) {
+        throw new \BadMethodCallException('Method "offsetUnset" is not supported');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($index) {
+        return $this->get($index);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($index) {
+        if($index >= 0 && $index < $this->count()) {
+            return $this->get($index) !== null;
+        }
+        return false;
+    }
 }
