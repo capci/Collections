@@ -53,4 +53,19 @@ abstract class AbstractCollection implements \IteratorAggregate, Collection {
      * @return \Traversable このコレクションの全要素にアクセスするためのイテレータ。
      */
     public abstract function getIterator(): \Traversable;
+    
+    /**
+     * 2つの要素が同値であるかを判定します。
+     * 
+     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
+     * 
+     * このクラスでは、'==='演算子で比較します。
+     * 
+     * @param mixed $e1 1つめの要素。
+     * @param mixed $e2 2つめの要素。
+     * @return bool 2つの要素が同値である場合true、そうでない場合false。
+     */
+    public function compareElements($e1, $e2): bool {
+        return $e1 === $e2;
+    }
 }

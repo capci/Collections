@@ -60,4 +60,16 @@ class AbstractCollectionTest extends \PHPUnit_Framework_TestCase
         $this->object->r = [1, 2, 3];
         $this->assertSame([1, 2, 3], $this->object->toArray());
     }
+    
+    public function testCompareElements() {
+        $this->assertTrue($this->object->compareElements(1, 1));
+        $this->assertTrue($this->object->compareElements('foo', 'foo'));
+        $this->assertTrue($this->object->compareElements(null, null));
+        
+        $this->assertFalse($this->object->compareElements(1, 2));
+        $this->assertFalse($this->object->compareElements('foo', 'bar'));
+        $this->assertFalse($this->object->compareElements(1, '1'));
+        $this->assertFalse($this->object->compareElements(null, 0));
+        $this->assertFalse($this->object->compareElements(new \stdClass(), new \stdClass()));
+    }
 }

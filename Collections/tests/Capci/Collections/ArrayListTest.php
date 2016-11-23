@@ -431,4 +431,40 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->object[5]));
         $this->assertFalse(isset($this->object[2]));
     }
+    
+    public function testRange() {
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        
+        $subSequence = $this->object->range(0, 5);
+        $this->assertSame([1, 2, null, 4, 5], $subSequence->toArray());
+        
+        $subSequence = $this->object->range(1, 3);
+        $this->assertSame([2, null, 4], $subSequence->toArray());
+        
+        try {
+            $subSequence = $this->object->range(-1, 3);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->toArray());
+        }
+        
+        try {
+            $subSequence = $this->object->range(0, 6);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->toArray());
+        }
+        
+        try {
+            $subSequence = $this->object->range(2, 4);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->toArray());
+        }
+    }
 }

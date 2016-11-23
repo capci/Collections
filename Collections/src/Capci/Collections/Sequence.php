@@ -115,4 +115,81 @@ interface Sequence extends Collection, \ArrayAccess {
      * @return bool 指定した位置に要素が存在し、かつその要素がnullでない場合true、そうでない場合false。
      */
     public function offsetExists($index);
+    
+    /**
+     * 2つの要素が同値であるかを判定します。
+     * 
+     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
+     * 
+     * このメソッドの実装は、以下のメソッドの挙動に影響を与えます。
+     * <ul>
+     * <li>contains</li>
+     * <li>containsAll</li>
+     * <li>indexOf</li>
+     * <li>lastIndexOf</li>
+     * </ul>
+     * 
+     * @param mixed $e1 1つめの要素。
+     * @param mixed $e2 2つめの要素。
+     * @return bool 2つの要素が同値である場合true、そうでない場合false。
+     */
+    public function compareElements($e1, $e2): bool;
+    
+    /**
+     * このシーケンスに指定した要素が含まれているか調べます。
+     * 
+     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
+     * @see Sequence::compareElements($e1, $e2)
+     * 
+     * @param mixed $e 調べる要素。
+     * @return bool このシーケンスに指定した要素が含まれている場合true、そうでない場合false。
+     */
+    public function contains($e): bool;
+    
+    /**
+     * このシーケンスに指定したコレクションの全要素が含まれているか調べます。
+     * 
+     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
+     * @see Sequence::compareElements($e1, $e2)
+     * 
+     * @param Collection $c 調べるコレクション。
+     * @return bool このシーケンスに指定したコレクションの全要素が含まれている場合true、そうでない場合false。
+     */
+    public function containsAll(Collection $c): bool;
+    
+    /**
+     * このシーケンスで指定した要素が最初に検出された位置を返します。
+     * 
+     * 見つからなかった場合-1を返します。
+     * 
+     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
+     * @see Sequence::compareElements($e1, $e2)
+     * 
+     * @param mixed $e 調べる要素。
+     * @return int このシーケンスで指定した要素が最初に検出された位置。
+     */
+    public function indexOf($e): int;
+    
+    /**
+     * このシーケンスで指定した要素が最後に検出された位置を返します。
+     * 
+     * 見つからなかった場合-1を返します。
+     * 
+     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
+     * @see Sequence::compareElements($e1, $e2)
+     * 
+     * @param mixed $e 調べる要素。
+     * @return int このシーケンスで指定した要素が最後に検出された位置。
+     */
+    public function lastIndexOf($e): int;
+    
+    /**
+     * このシーケンスの一部を新しいシーケンスとして返します。
+     * 
+     * @param int $index 開始インデックス。
+     * @param int $count 新しいシーケンスの要素数。
+     * @return Sequence 切り出されたシーケンス。
+     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $count < 0 || ($index + $count) > count()）。
+     */
+    public function range(int $index, int $count): Sequence;
 }

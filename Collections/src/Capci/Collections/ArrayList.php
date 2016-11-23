@@ -130,4 +130,16 @@ class ArrayList extends AbstractSequence {
     public function offsetExists($index) {
         return isset($this->array[$index]);
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function range(int $index, int $count): Sequence {
+        if($index < 0 || $count < 0 || ($index + $count) > $this->count()) {
+            throw new \OutOfRangeException('Index is out of range: ' . $index);
+        }
+        $subSequence = new ArrayList();
+        $subSequence->array = array_slice($this->array, $index, $count);
+        return $subSequence;
+    }
 }

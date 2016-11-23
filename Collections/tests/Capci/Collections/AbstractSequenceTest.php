@@ -283,4 +283,79 @@ class AbstractSequenceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->object[5]));
         $this->assertFalse(isset($this->object[2]));
     }
+    
+    public function testContains() {
+        $this->object->r = [1, 2, null, 4, 5];
+        $this->assertTrue($this->object->contains(1));
+        $this->assertTrue($this->object->contains(4));
+        $this->assertTrue($this->object->contains(5));
+        $this->assertTrue($this->object->contains(null));
+        
+        $this->assertFalse($this->object->contains(0));
+    }
+    
+    public function testContainsAll() {
+        $c = clone $this->object;
+        $this->object->r = [1, 2, null, 4, 5];
+        
+        $c->r = [2, null, 4];
+        $this->assertTrue($this->object->containsAll($c));
+        
+        $c->r = [];
+        $this->assertTrue($this->object->containsAll($c));
+        
+        $c->r = [1, 2, 5, 0];
+        $this->assertFalse($this->object->containsAll($c));
+    }
+    
+    public function testIndexOf() {
+        $this->object->r = [1, 2, null, 4, 1, 5];
+        
+        $this->assertSame(0, $this->object->indexOf(1));
+        $this->assertSame(2, $this->object->indexOf(null));
+        $this->assertSame(5, $this->object->indexOf(5));
+        
+        $this->assertSame(-1, $this->object->indexOf(3));
+    }
+    
+    public function testLastIndexOf() {
+        $this->object->r = [1, 2, null, 4, 1, 5];
+        
+        $this->assertSame(4, $this->object->lastIndexOf(1));
+        $this->assertSame(2, $this->object->lastIndexOf(null));
+        $this->assertSame(5, $this->object->lastIndexOf(5));
+        
+        $this->assertSame(-1, $this->object->lastIndexOf(3));
+    }
+    
+    public function testRange() {
+        $this->object->r = [1, 2, null, 4, 5];
+        
+        $subSequence = $this->object->range(0, 5);
+        $this->assertSame([1, 2, null, 4, 5], $subSequence->toArray());
+        
+        $subSequence = $this->object->range(1, 3);
+        $this->assertSame([2, null, 4], $subSequence->toArray());
+        
+        try {
+            $subSequence = $this->object->range(-1, 3);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->r);
+        }
+        
+        try {
+            $subSequence = $this->object->range(0, 6);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->r);
+        }
+        
+        try {
+            $subSequence = $this->object->range(2, 4);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, null, 4, 5], $this->object->r);
+        }
+    }
 }

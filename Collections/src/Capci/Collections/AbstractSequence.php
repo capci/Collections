@@ -136,4 +136,86 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
         }
         return false;
     }
+    
+    /**
+     * 2つの要素が同値であるかを判定します。
+     * 
+     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
+     * 
+     * このメソッドの実装は、以下のメソッドの挙動に影響を与えます。
+     * <ul>
+     * <li>contains</li>
+     * <li>containsAll</li>
+     * <li>indexOf</li>
+     * <li>lastIndexOf</li>
+     * </ul>
+     * 
+     * このクラスでは、'==='演算子で比較します。
+     * 
+     * @param mixed $e1 1つめの要素。
+     * @param mixed $e2 2つめの要素。
+     * @return bool 2つの要素が同値である場合true、そうでない場合false。
+     */
+    public function compareElements($e1, $e2): bool {
+        return parent::compareElements($e1, $e2);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function contains($e): bool {
+        foreach ($this as $element) {
+            if($this->compareElements($e, $element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function containsAll(Collection $c): bool {
+        foreach ($c as $e) {
+            if(!$this->contains($e)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function indexOf($e): int {
+        foreach ($this as $index => $element) {
+            if($this->compareElements($e, $element)) {
+                return $index;
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function lastIndexOf($e): int {
+        for ($index = $this->count() - 1; $index >= 0; --$index) {
+            if($this->compareElements($e, $this->get($index))) {
+                return $index;
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function range(int $index, int $count): Sequence {
+        $subSequence = new ArrayList();
+        for ($i = $index; $i < ($index + $count); ++$i) {
+            $subSequence->add($this->get($i));
+        }
+        return $subSequence;
+    }
 }
