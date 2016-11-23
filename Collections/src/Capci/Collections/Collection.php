@@ -12,7 +12,9 @@ declare (strict_types = 1);
 namespace Capci\Collections;
 
 /**
+ * 任意の要素の集合です。
  * 
+ * 全てのSequence、Set、Mapの基底インターフェースとなります。
  */
 interface Collection extends \Countable, \Traversable {
     

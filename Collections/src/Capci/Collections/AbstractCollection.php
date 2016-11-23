@@ -12,7 +12,9 @@ declare (strict_types = 1);
 namespace Capci\Collections;
 
 /**
+ * コレクションのデフォルト実装を提供する抽象クラスです。
  * 
+ * このクラスのサブクラスは、より効率的な実装となるようメソッドをオーバーライドしてください。
  */
 abstract class AbstractCollection implements \IteratorAggregate, Collection {
     

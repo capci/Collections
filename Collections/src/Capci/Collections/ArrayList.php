@@ -12,12 +12,15 @@ declare (strict_types = 1);
 namespace Capci\Collections;
 
 /**
- * 
+ * 内部状態の管理に配列を使用したシーケンスです。
  */
 class ArrayList extends AbstractSequence {
     
     private $array;
     
+    /**
+     * 空のシーケンスを作成します。
+     */
     public function __construct() {
         $this->array = [];
     }

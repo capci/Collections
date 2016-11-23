@@ -12,7 +12,9 @@ declare (strict_types = 1);
 namespace Capci\Collections;
 
 /**
+ * 順序付けられたコレクションです。
  * 
+ * 全てのSequenceの基底インターフェースです。
  */
 interface Sequence extends Collection {
     
