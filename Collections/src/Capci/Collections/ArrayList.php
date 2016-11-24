@@ -19,9 +19,10 @@ class ArrayList extends AbstractSequence {
     private $array;
     
     /**
-     * 空のシーケンスを作成します。
+     * {@inheritdoc}
      */
-    public function __construct() {
+    public function __construct(ElementsComparator $elementsComparator = null) {
+        parent::__construct($elementsComparator);
         $this->array = [];
     }
 

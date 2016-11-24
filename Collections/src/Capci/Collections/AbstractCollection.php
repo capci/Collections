@@ -19,6 +19,30 @@ namespace Capci\Collections;
 abstract class AbstractCollection implements \IteratorAggregate, Collection {
     
     /**
+     * @var ElementsComparator
+     */
+    private $elementsComparator;
+    
+    /**
+     * 空のコレクションを作成します。
+     * 
+     * 第1引数で、このコレクションで要素の比較に使用する、ElementsComparatorオブジェクトを指定します。
+     * 省略するかnullを渡した場合、デフォルトのElementsComparatorオブジェクトを使用します。
+     * 
+     * @param ElementsComparator|null $elementsComparator このシーケンスで要素の比較に使用するElementsComparatorオブジェクト。
+     */
+    public function __construct(ElementsComparator $elementsComparator = null) {
+        if($elementsComparator === null) {
+            $elementsComparator = new class implements ElementsComparator {
+                public function compareElements($e1, $e2): bool {
+                    return $e1 === $e2;
+                }
+            };
+        }
+        $this->elementsComparator = $elementsComparator;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function count(): int {
@@ -55,17 +79,20 @@ abstract class AbstractCollection implements \IteratorAggregate, Collection {
     public abstract function getIterator(): \Traversable;
     
     /**
-     * 2つの要素が同値であるかを判定します。
-     * 
-     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
-     * 
-     * このクラスでは、'==='演算子で比較します。
+     * {@inheritdoc}
+     */
+    public function getElementsComparator(): ElementsComparator {
+        return $this->elementsComparator;
+    }
+    
+    /**
+     * 2つの要素が同値であるかを、このコレクションのコンストラクタで指定されたElementsComparatorオブジェクトを使用して判定します。
      * 
      * @param mixed $e1 1つめの要素。
      * @param mixed $e2 2つめの要素。
      * @return bool 2つの要素が同値である場合true、そうでない場合false。
      */
-    public function compareElements($e1, $e2): bool {
-        return $e1 === $e2;
+    protected final function compareElements($e1, $e2): bool {
+        return $this->elementsComparator->compareElements($e1, $e2);
     }
 }

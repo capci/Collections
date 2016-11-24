@@ -117,11 +117,9 @@ interface Sequence extends Collection, \ArrayAccess {
     public function offsetExists($index);
     
     /**
-     * 2つの要素が同値であるかを判定します。
+     * このコレクションで要素の比較に使用されている、ElementsComparatorオブジェクトを返します。
      * 
-     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
-     * 
-     * このメソッドの実装は、以下のメソッドの挙動に影響を与えます。
+     * 以下のメソッドが、ElementsComparatorオブジェクトの実装に依存します。
      * <ul>
      * <li>contains</li>
      * <li>containsAll</li>
@@ -129,11 +127,9 @@ interface Sequence extends Collection, \ArrayAccess {
      * <li>lastIndexOf</li>
      * </ul>
      * 
-     * @param mixed $e1 1つめの要素。
-     * @param mixed $e2 2つめの要素。
-     * @return bool 2つの要素が同値である場合true、そうでない場合false。
+     * @return ElementsComparator 要素の比較に使用されているElementsComparatorオブジェクト。
      */
-    public function compareElements($e1, $e2): bool;
+    public function getElementsComparator(): ElementsComparator;
     
     /**
      * このシーケンスに指定した要素が含まれているか調べます。

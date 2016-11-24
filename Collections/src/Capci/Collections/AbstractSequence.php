@@ -19,6 +19,20 @@ namespace Capci\Collections;
 abstract class AbstractSequence extends AbstractCollection implements Sequence {
     
     /**
+     * 空のシーケンスを作成します。
+     * 
+     * 第1引数で、このシーケンスで要素の比較に使用する、ElementsComparatorオブジェクトを指定します。
+     * 省略するかnullを渡した場合、デフォルトのElementsComparatorオブジェクトを使用します。
+     * 
+     * @see Sequence::getElementsComparator()
+     * 
+     * @param ElementsComparator|null $elementsComparator このシーケンスで要素の比較に使用するElementsComparatorオブジェクト。
+     */
+    public function __construct(ElementsComparator $elementsComparator = null) {
+        parent::__construct($elementsComparator);
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function clear() {
@@ -135,29 +149,6 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
             return $this->get($index) !== null;
         }
         return false;
-    }
-    
-    /**
-     * 2つの要素が同値であるかを判定します。
-     * 
-     * 要素の同値性の判定が必要となるコレクションのメソッドは、このメソッドの実装により挙動が変わります。
-     * 
-     * このメソッドの実装は、以下のメソッドの挙動に影響を与えます。
-     * <ul>
-     * <li>contains</li>
-     * <li>containsAll</li>
-     * <li>indexOf</li>
-     * <li>lastIndexOf</li>
-     * </ul>
-     * 
-     * このクラスでは、'==='演算子で比較します。
-     * 
-     * @param mixed $e1 1つめの要素。
-     * @param mixed $e2 2つめの要素。
-     * @return bool 2つの要素が同値である場合true、そうでない場合false。
-     */
-    public function compareElements($e1, $e2): bool {
-        return parent::compareElements($e1, $e2);
     }
     
     /**
