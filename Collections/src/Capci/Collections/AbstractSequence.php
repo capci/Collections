@@ -21,15 +21,15 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * 空のシーケンスを作成します。
      * 
-     * 第1引数で、このシーケンスで要素の比較に使用する、ElementsComparatorオブジェクトを指定します。
-     * 省略するかnullを渡した場合、デフォルトのElementsComparatorオブジェクトを使用します。
+     * 第1引数で、このシーケンスで要素の比較に使用する、EqualityComparerオブジェクトを指定します。
+     * 省略するかnullを渡した場合、デフォルトのEqualityComparerオブジェクトを使用します。
      * 
-     * @see Sequence::getElementsComparator()
+     * @see Sequence::getEqualityComparer()
      * 
-     * @param ElementsComparator|null $elementsComparator このシーケンスで要素の比較に使用するElementsComparatorオブジェクト。
+     * @param EqualityComparer|null $equalityComparer このシーケンスで要素の比較に使用するEqualityComparerオブジェクト。
      */
-    public function __construct(ElementsComparator $elementsComparator = null) {
-        parent::__construct($elementsComparator);
+    public function __construct(EqualityComparer $equalityComparer = null) {
+        parent::__construct($equalityComparer);
     }
     
     /**
@@ -156,7 +156,7 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
      */
     public function contains($e): bool {
         foreach ($this as $element) {
-            if($this->compareElements($e, $element)) {
+            if($this->elementsEquals($e, $element)) {
                 return true;
             }
         }
@@ -180,7 +180,7 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
      */
     public function indexOf($e): int {
         foreach ($this as $index => $element) {
-            if($this->compareElements($e, $element)) {
+            if($this->elementsEquals($e, $element)) {
                 return $index;
             }
         }
@@ -192,7 +192,7 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
      */
     public function lastIndexOf($e): int {
         for ($index = $this->count() - 1; $index >= 0; --$index) {
-            if($this->compareElements($e, $this->get($index))) {
+            if($this->elementsEquals($e, $this->get($index))) {
                 return $index;
             }
         }

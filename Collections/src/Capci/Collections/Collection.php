@@ -45,9 +45,9 @@ interface Collection extends \Countable, \Traversable {
     public function toArray(): array;
     
     /**
-     * このコレクションで要素の比較に使用されている、ElementsComparatorオブジェクトを返します。
+     * このコレクションで要素の比較に使用されている、EqualityComparerオブジェクトを返します。
      * 
-     * @return ElementsComparator 要素の比較に使用されているElementsComparatorオブジェクト。
+     * @return EqualityComparer 要素の比較に使用されているEqualityComparerオブジェクト。
      */
-    public function getElementsComparator(): ElementsComparator;
+    public function getEqualityComparer(): EqualityComparer;
 }

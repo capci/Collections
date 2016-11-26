@@ -117,9 +117,9 @@ interface Sequence extends Collection, \ArrayAccess {
     public function offsetExists($index);
     
     /**
-     * このコレクションで要素の比較に使用されている、ElementsComparatorオブジェクトを返します。
+     * このコレクションで要素の比較に使用されている、EqualityComparerオブジェクトを返します。
      * 
-     * 以下のメソッドが、ElementsComparatorオブジェクトの実装に依存します。
+     * 以下のメソッドが、EqualityComparerオブジェクトの実装に依存します。
      * <ul>
      * <li>contains</li>
      * <li>containsAll</li>
@@ -127,15 +127,15 @@ interface Sequence extends Collection, \ArrayAccess {
      * <li>lastIndexOf</li>
      * </ul>
      * 
-     * @return ElementsComparator 要素の比較に使用されているElementsComparatorオブジェクト。
+     * @return EqualityComparer 要素の比較に使用されているEqualityComparerオブジェクト。
      */
-    public function getElementsComparator(): ElementsComparator;
+    public function getEqualityComparer(): EqualityComparer;
     
     /**
      * このシーケンスに指定した要素が含まれているか調べます。
      * 
-     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
-     * @see Sequence::compareElements($e1, $e2)
+     * このメソッドはelementsEqualsメソッドの実装に影響を受けます。
+     * @see Sequence::elementsEquals($e1, $e2)
      * 
      * @param mixed $e 調べる要素。
      * @return bool このシーケンスに指定した要素が含まれている場合true、そうでない場合false。
@@ -145,8 +145,8 @@ interface Sequence extends Collection, \ArrayAccess {
     /**
      * このシーケンスに指定したコレクションの全要素が含まれているか調べます。
      * 
-     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
-     * @see Sequence::compareElements($e1, $e2)
+     * このメソッドはelementsEqualsメソッドの実装に影響を受けます。
+     * @see Sequence::elementsEquals($e1, $e2)
      * 
      * @param Collection $c 調べるコレクション。
      * @return bool このシーケンスに指定したコレクションの全要素が含まれている場合true、そうでない場合false。
@@ -158,8 +158,8 @@ interface Sequence extends Collection, \ArrayAccess {
      * 
      * 見つからなかった場合-1を返します。
      * 
-     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
-     * @see Sequence::compareElements($e1, $e2)
+     * このメソッドはelementsEqualsメソッドの実装に影響を受けます。
+     * @see Sequence::elementsEquals($e1, $e2)
      * 
      * @param mixed $e 調べる要素。
      * @return int このシーケンスで指定した要素が最初に検出された位置。
@@ -171,8 +171,8 @@ interface Sequence extends Collection, \ArrayAccess {
      * 
      * 見つからなかった場合-1を返します。
      * 
-     * このメソッドはcompareElementsメソッドの実装に影響を受けます。
-     * @see Sequence::compareElements($e1, $e2)
+     * このメソッドはelementsEqualsメソッドの実装に影響を受けます。
+     * @see Sequence::elementsEquals($e1, $e2)
      * 
      * @param mixed $e 調べる要素。
      * @return int このシーケンスで指定した要素が最後に検出された位置。

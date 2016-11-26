@@ -21,8 +21,8 @@ class ArrayList extends AbstractSequence {
     /**
      * {@inheritdoc}
      */
-    public function __construct(ElementsComparator $elementsComparator = null) {
-        parent::__construct($elementsComparator);
+    public function __construct(EqualityComparer $equalityComparer = null) {
+        parent::__construct($equalityComparer);
         $this->array = [];
     }
 
