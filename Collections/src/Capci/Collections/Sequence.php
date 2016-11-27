@@ -28,7 +28,7 @@ interface Sequence extends Collection, \ArrayAccess {
     /**
      * このシーケンスの末尾に指定したコレクションの全要素を追加します。
      * 
-     * @param \Capci\Collections\Collection $c 追加するコレクション。
+     * @param Collection $c 追加するコレクション。
      */
     public function addAll(Collection $c);
     

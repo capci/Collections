@@ -11,19 +11,58 @@ declare (strict_types = 1);
 
 namespace Capci\Collections;
 
+/**
+ * 重複要素のないコレクションです。
+ * 
+ * 全てのSetの基底インターフェースです。
+ */
 interface Set extends Collection {
     
     /**
+     * このセットに指定された要素が存在しない場合、要素を追加します。
      * 
-     * @param mixed $e
-     * @return bool Description
+     * @param mixed $e 追加する要素。
+     * @return bool このセットの内容が変更された場合true、そうでない場合false。
      */
     public function add($e): bool;
     
     /**
+     * このセットに指定されたコレクションの各要素が存在しない場合、その要素を追加します。
      * 
-     * @param mixed $e
-     * @return bool Description
+     * @param Collection $c 追加するコレクション。
+     * @return bool このセットの内容が変更された場合true、そうでない場合false。
      */
-    //public function remove($e): bool;
+    public function addAll(Collection $c): bool;
+    
+    /**
+     * 指定された要素がこのセットに存在するか調べます。
+     * 
+     * @param mixed $e 調べる要素。
+     * @return bool このセットに指定した要素が含まれている場合true、そうでない場合false。
+     */
+    public function contains($e): bool;
+    
+    /**
+     * このセットに指定したコレクションの全要素が含まれているか調べます。
+     * 
+     * @param Collection $c 調べるコレクション。
+     * @return bool このセットに指定したコレクションの全要素が含まれている場合true、そうでない場合false。
+     */
+    public function containsAll(Collection $c): bool;
+
+    /**
+     * このセットから指定した要素を削除します。
+     * 
+     * @param mixed $e 削除する要素。
+     * @return bool このセットの内容が変更された場合true、そうでない場合false。
+     */
+    public function remove($e): bool;
+    
+    /**
+     * このセットから指定したコレクションの全ての要素を削除します。
+     * 
+     * @param Collection $c 削除するコレクション。
+     * @return bool このセットの内容が変更された場合true、そうでない場合false。
+     */
+    public function removeAll(Collection $c): bool;
 }

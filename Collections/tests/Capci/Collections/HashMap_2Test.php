@@ -212,7 +212,12 @@ class HashMap_2Test extends \PHPUnit_Framework_TestCase
     public function testOffsetExists() {
         $index = mt_rand(0, $this->object->count() - 1);
         $key = $this->entries[$index][0];
-        $this->assertTrue(isset($this->object[$key]));
+        
+        if($this->object->get($key) === null) {
+            $this->assertFalse(isset($this->object[$key]));
+        } else {
+            $this->assertTrue(isset($this->object[$key]));
+        }
         
         $this->assertFalse(isset($this->object[-1]));
     }
