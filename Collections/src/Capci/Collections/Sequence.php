@@ -58,6 +58,17 @@ interface Sequence extends Collection, \ArrayAccess {
      * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
      */
     public function get(int $index);
+    
+    /**
+     * このシーケンスの指定した位置の要素を返します。
+     * 
+     * インデックスが範囲外の場合、引数で指定したデフォルト値を返します。
+     * 
+     * @param int $index 返される要素の位置。
+     * @param mixed $defaultValue デフォルト値。
+     * @return mixed 指定された位置の要素。
+     */
+    public function getOrDefault(int $index, $defaultValue = null);
 
     /**
      * このシーケンスの指定した位置の要素を置き換えます。
@@ -79,45 +90,7 @@ interface Sequence extends Collection, \ArrayAccess {
     public function remove(int $index);
     
     /**
-     * このシーケンスの指定した位置の要素を置き換えます。
-     * 
-     * 第1引数にnullを渡した場合、このシーケンスの末尾に要素を追加します。
-     * 
-     * @param int|null $index 置き換える位置。
-     * @param mixed $e 置き換える要素。
-     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
-     */
-    public function offsetSet($index, $e);
-    
-    /**
-     * シーケンスではこのメソッドはサポートされていません。
-     * 
-     * \BadMethodCallExceptionがスローされます。
-     * 
-     * @param int $index インデックス。
-     * @throws \BadMethodCallException 必ずスローされます。
-     */
-    public function offsetUnset($index);
-    
-    /**
-     * このシーケンスの指定した位置の要素を返します。
-     * 
-     * @param int $index 返される要素の位置。
-     * @return mixed 指定された位置の要素。
-     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
-     */
-    public function offsetGet($index);
-    
-    /**
-     * 指定した位置に要素が存在し、かつその要素がnullでないかを調べます。
-     * 
-     * @param int $index 調べるインデックス。
-     * @return bool 指定した位置に要素が存在し、かつその要素がnullでない場合true、そうでない場合false。
-     */
-    public function offsetExists($index);
-    
-    /**
-     * このコレクションで要素の比較に使用されている、EqualityComparerオブジェクトを返します。
+     * このシーケンスで要素の比較に使用されている、EqualityComparerオブジェクトを返します。
      * 
      * 以下のメソッドが、EqualityComparerオブジェクトの実装に依存します。
      * <ul>
@@ -188,4 +161,42 @@ interface Sequence extends Collection, \ArrayAccess {
      * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $count < 0 || ($index + $count) > count()）。
      */
     public function range(int $index, int $count): Sequence;
+    
+    /**
+     * このシーケンスの指定した位置の要素を置き換えます。
+     * 
+     * 第1引数にnullを渡した場合、このシーケンスの末尾に要素を追加します。
+     * 
+     * @param int|null $index 置き換える位置。
+     * @param mixed $e 置き換える要素。
+     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
+     */
+    public function offsetSet($index, $e);
+    
+    /**
+     * シーケンスではこのメソッドはサポートされていません。
+     * 
+     * \BadMethodCallExceptionがスローされます。
+     * 
+     * @param int $index インデックス。
+     * @throws \BadMethodCallException 必ずスローされます。
+     */
+    public function offsetUnset($index);
+    
+    /**
+     * このシーケンスの指定した位置の要素を返します。
+     * 
+     * @param int $index 返される要素の位置。
+     * @return mixed 指定された位置の要素。
+     * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index >= count()）。
+     */
+    public function offsetGet($index);
+    
+    /**
+     * 指定した位置に要素が存在し、かつその要素がnullでないかを調べます。
+     * 
+     * @param int $index 調べるインデックス。
+     * @return bool 指定した位置に要素が存在し、かつその要素がnullでない場合true、そうでない場合false。
+     */
+    public function offsetExists($index);
 }

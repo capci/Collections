@@ -24,6 +24,7 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
      * 第1引数で、このシーケンスで要素の比較に使用する、EqualityComparerオブジェクトを指定します。
      * 省略するかnullを渡した場合、デフォルトのEqualityComparerオブジェクトを使用します。
      * 
+     * @see AbstractCollection::getDefaultEqualityComparer()
      * @see Sequence::getEqualityComparer()
      * 
      * @param EqualityComparer|null $equalityComparer このシーケンスで要素の比較に使用するEqualityComparerオブジェクト。
@@ -97,6 +98,16 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * {@inheritdoc}
      */
+    public function getOrDefault(int $index, $defaultValue = null) {
+        if($index < 0 || $index >= $this->count()) {
+            return $defaultValue;
+        }
+        return $this->get($index);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function set(int $index, $e) {
         $modified = false;
         $elements = $this->toArray();
@@ -114,41 +125,6 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
             throw new \OutOfRangeException('Index is out of range: ' . $index);
         }
         return $ret;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetSet($index, $e) {
-        if($index === null) {
-            $this->add($e);
-        } else {
-            $this->set($index, $e);
-        }
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($index) {
-        throw new \BadMethodCallException('Method "offsetUnset" is not supported');
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($index) {
-        return $this->get($index);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetExists($index) {
-        if($index >= 0 && $index < $this->count()) {
-            return $this->get($index) !== null;
-        }
-        return false;
     }
     
     /**
@@ -208,5 +184,40 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
             $subSequence->add($this->get($i));
         }
         return $subSequence;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($index, $e) {
+        if($index === null) {
+            $this->add($e);
+        } else {
+            $this->set($index, $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($index) {
+        throw new \BadMethodCallException('Method "offsetUnset" is not supported');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($index) {
+        return $this->get($index);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($index) {
+        if($index >= 0 && $index < $this->count()) {
+            return $this->get($index) !== null;
+        }
+        return false;
     }
 }

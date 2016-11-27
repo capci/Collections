@@ -92,6 +92,7 @@ abstract class AbstractCollection implements \IteratorAggregate, Collection {
      * デフォルトのEqualityComparerオブジェクトを使用します。
      * 
      * @see AbstractCollection::getDefaultEqualityComparer()
+     * @see AbstractCollection::getEqualityComparer()
      * 
      * @param EqualityComparer|null $equalityComparer このシーケンスで要素の比較に使用するEqualityComparerオブジェクト。
      */
