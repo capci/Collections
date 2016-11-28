@@ -295,6 +295,20 @@ class AbstractMapTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->containsValue('foo'));
     }
     
+    public function testKeySet() {
+        $this->object->clear();
+        $this->object->put(1, 1);
+        $this->object->put(2, 2);
+        $this->object->put(3, 3);
+        $this->object->put(4, 4);
+        $this->object->put(5, 5);
+        $actual = $this->object->keySet()->toArray();
+        usort($actual, function($e1, $e2) {
+            return $e1 - $e2;
+        });
+        $this->assertSame([1, 2, 3, 4, 5], $actual);
+    }
+    
     public function testOffsetSet() {
         $this->object[null] = null;
         $this->assertSame([[null, null]], $this->object->toArray());

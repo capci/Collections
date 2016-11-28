@@ -177,6 +177,34 @@ class HashMap_2Test extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->containsValue(-1));
     }
     
+    public function testKeySet() {
+        $actual = $this->object->keySet()->toArray();
+        $map = $this->object;
+        $comparer = function($e1, $e2) use($map) {
+            $h1 = $map->getEqualityComparer()->elementHashCode($e1);
+            $h2 = $map->getEqualityComparer()->elementHashCode($e2);
+            if($h1 !== $h2) {
+                if($h1 > $h2) {
+                    return 1;
+                }
+                return -1;
+            }
+            
+            $h1 = $map->getEqualityComparer()->elementHashCode(gettype($e1));
+            $h2 = $map->getEqualityComparer()->elementHashCode(gettype($e2));
+            if($h1 > $h2) {
+                return 1;
+            }
+            if($h1 < $h2) {
+                return -1;
+            }
+            return 0;
+        };
+        usort($actual, $comparer);
+        usort($this->elements, $comparer);
+        $this->assertSame($this->elements, $actual);
+    }
+    
     public function testOffsetSet() {
         $this->object['bar'] = 999;
         $this->entries[] = ['bar', 999];

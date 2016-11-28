@@ -124,6 +124,17 @@ abstract class AbstractMap extends AbstractCollection implements Map {
     /**
      * {@inheritdoc}
      */
+    public function keySet(): Set {
+        $set = new HashSet(16, 0.75, $this->getDefaultEqualityComparer());
+        foreach ($this as $key => $value) {
+            $set->add($key);
+        }
+        return $set;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($key, $value) {
         $this->put($key, $value);
     }

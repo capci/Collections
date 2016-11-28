@@ -69,7 +69,13 @@ class HashSet_2Test extends \PHPUnit_Framework_TestCase
             
             $h1 = $set->getEqualityComparer()->elementHashCode(gettype($e1));
             $h2 = $set->getEqualityComparer()->elementHashCode(gettype($e2));
-            return $h1 - $h2;
+            if($h1 > $h2) {
+                return 1;
+            }
+            if($h1 < $h2) {
+                return -1;
+            }
+            return 0;
         };
         usort($expected, $comparer);
         usort($actual, $comparer);

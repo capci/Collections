@@ -119,6 +119,13 @@ interface Map extends Collection, \ArrayAccess {
     public function containsValue($value): bool;
     
     /**
+     * このマップのキーの集合を返します。
+     * 
+     * @return Set このマップのキーの集合。
+     */
+    public function keySet(): Set;
+
+    /**
      * このマップにキーと値を関連付けます。
      * 
      * すでに同じキーに関連付けられている値が存在する場合、新しい値で上書きされます。

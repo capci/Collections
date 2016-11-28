@@ -6,6 +6,7 @@
  * @link https://github.com/capci/Collections Capci\Collections
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 declare (strict_types = 1);
 
 namespace Capci\Collections;

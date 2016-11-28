@@ -21,6 +21,35 @@ class HashSet extends AbstractSet {
     private $loadFactor;
     private $rehashThreshold;
     
+    /**
+     * 空のマップを作成します。
+     * 
+     * 第1引数の$initialCapacityはハッシュテーブルの初期容量を決める値で、実際はこの値以上の最も小さい2のべき乗数が初期容量となります。
+     * 
+     * 第2引数の$loadFactorはリハッシュ（ハッシュテーブルの再構築）のタイミングを決める値で、
+     * ハッシュテーブルのサイズに占める全要素の割合がこの値を超えた場合、リハッシュが行われます。
+     * 
+     * リハッシュはテーブルのサイズを2倍にし、ハッシュテーブルを再構築します。
+     * この動作により、エントリー数が大きくなっても、エントリーの挿入と取得のコストが大幅に劣化することが防がれます。
+     * 
+     * エントリー数が膨大になり、あらかじめその数が想定できる場合、適した初期容量と負荷係数を選択することで性能を向上できます。
+     * あくまで目安ですが、
+     * <pre>
+     * 初期容量 = (要素数 + α) / 負荷係数
+     * </pre>
+     * となるような初期容量を選択すると、エントリーの挿入と取得のコストのバランスがとられます。
+     * 
+     * 第3引数で、このマップで要素の比較に使用する、EqualityComparerオブジェクトを指定します。
+     * 省略するかnullを渡した場合、デフォルトのEqualityComparerオブジェクトを使用します。
+     * 
+     * @see AbstractCollection::getDefaultEqualityComparer()
+     * @see Set::getEqualityComparer()
+     * 
+     * @param int $initialCapacity 初期容量、デフォルト値は16。
+     * @param float $loadFactor 負荷係数、デフォルト値は0.75。
+     * @param EqualityComparer $equalityComparer このマップで要素の比較に使用するEqualityComparerオブジェクト。
+     * @throws \InvalidArgumentException $initialCapacityが0以下、$loadFactorが負の数もしくはNaNの場合。
+     */
     public function __construct(int $initialCapacity = 16, float $loadFactor = 0.75, EqualityComparer $equalityComparer = null) {
         if($initialCapacity <= 0) {
             throw new \InvalidArgumentException('Initial capacity must be greater than 0: ' . $initialCapacity);
