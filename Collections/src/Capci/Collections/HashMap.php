@@ -76,11 +76,7 @@ class HashMap extends AbstractMap {
     }
     
     private function createTable($size): array {
-        $table = [];
-        for($i = 0; $i < $size; ++$i) {
-            $table[] = [];
-        }
-        return $table;
+        return array_fill(0, $size, []);
     }
     
     private function indexFor($key, int $size): int {
