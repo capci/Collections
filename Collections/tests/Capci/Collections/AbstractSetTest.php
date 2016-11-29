@@ -107,7 +107,7 @@ class AbstractSetTest extends \PHPUnit_Framework_TestCase
         $c->add(1);
         $c->add(2);
         $c->add(3);
-        $this->object->addAll($c);
+        $this->assertTrue($this->object->addAll($c));
         $this->assertSameSet([1, 2, 3], $this->object->toArray());
         
         $this->object->clear();
@@ -118,8 +118,33 @@ class AbstractSetTest extends \PHPUnit_Framework_TestCase
         $c->add(4);
         $c->add(5);
         $c->add(6);
-        $this->object->addAll($c);
+        $this->assertTrue($this->object->addAll($c));
         $this->assertSameSet([1, 2, 3, 4, 5, 6], $this->object->toArray());
+        
+        $this->object->clear();
+        $c->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $c->add(1);
+        $c->add(2);
+        $c->add(3);
+        $this->assertFalse($this->object->addAll($c));
+        $this->assertSameSet([1, 2, 3], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->assertTrue($this->object->addAll([4, 5, 6]));
+        $this->assertSameSet([1, 2, 3, 4, 5, 6], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->assertFalse($this->object->addAll([1, 2, 3]));
+        $this->assertSameSet([1, 2, 3], $this->object->toArray());
     }
     
     public function testContains() {

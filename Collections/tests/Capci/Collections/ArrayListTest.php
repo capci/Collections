@@ -119,6 +119,24 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $c->add(6);
         $this->object->addAll($c);
         $this->assertSame([1, 2, 3, 4, 5, 6], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->addAll([4, 5, 6]);
+        $this->assertSame([1, 2, 3, 4, 5, 6], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->addAll([
+            'foo' => 4, 
+            'bar' => 5, 
+            'test' => 6
+        ]);
+        $this->assertSame([1, 2, 3, 4, 5, 6], $this->object->toArray());
     }
     
     public function testInsert() {

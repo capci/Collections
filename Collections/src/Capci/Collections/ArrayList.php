@@ -71,8 +71,8 @@ class ArrayList extends AbstractSequence {
     /**
      * {@inheritdoc}
      */
-    public function addAll(Collection $c) {
-        foreach ($c as $e) {
+    public function addAll($iterable) {
+        foreach ($iterable as $e) {
             $this->array[] = $e;
         }
     }

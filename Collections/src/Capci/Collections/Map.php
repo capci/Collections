@@ -63,13 +63,13 @@ interface Map extends Collection, \ArrayAccess {
     public function put($key, $value);
     
     /**
-     * このマップに指定したマップの関連付けをコピーします。
+     * 指定した反復可能な値（arrayもしくはTraversalオブジェクト）に対しforeachで取得できる順番で、全ての要素をこのマップに追加します。
      * 
      * すでに同じキーに関連付けられている値が存在する場合、新しい値で上書きされます。
      * 
-     * @param Map $m コピーするマップ。
+     * @param array|\Traversable $iterable 反復可能な値。
      */
-    public function putAll(Map $m);
+    public function putAll($iterable);
     
     /**
      * 指定されたキーに関連付けられている値を返します。

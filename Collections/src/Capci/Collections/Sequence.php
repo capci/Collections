@@ -26,11 +26,13 @@ interface Sequence extends Collection, \ArrayAccess {
     public function add($e);
     
     /**
-     * このシーケンスの末尾に指定したコレクションの全要素を追加します。
+     * 指定した反復可能な値（arrayもしくはTraversalオブジェクト）に対しforeachで取得できる順番で、全ての要素をこのシーケンスの末尾に追加します。
      * 
-     * @param Collection $c 追加するコレクション。
+     * 追加されるのは値のみで、キーは無視されます。
+     * 
+     * @param array|\Traversable $iterable 追加する反復可能な値。
      */
-    public function addAll(Collection $c);
+    public function addAll($iterable);
     
     /**
      * このシーケンスの指定した位置に要素を挿入します。

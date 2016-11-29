@@ -45,9 +45,9 @@ abstract class AbstractSet extends AbstractCollection implements Set {
     /**
      * {@inheritdoc}
      */
-    public function addAll(Collection $c): bool {
+    public function addAll($iterable): bool {
         $modified = false;
-        foreach ($c as $e) {
+        foreach ($iterable as $e) {
             if($this->add($e)) {
                 $modified = true;
             }

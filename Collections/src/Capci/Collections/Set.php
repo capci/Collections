@@ -27,12 +27,15 @@ interface Set extends Collection {
     public function add($e): bool;
     
     /**
-     * このセットに指定されたコレクションの各要素が存在しない場合、その要素を追加します。
+     * 指定した反復可能な値（arrayもしくはTraversalオブジェクト）に対しforeachで取得できる順番で、全ての要素をこのセットに追加します。
      * 
-     * @param Collection $c 追加するコレクション。
+     * 既に同値の要素がある場合、要素の上書きはされません。<br>
+     * 追加されるのは値のみで、キーは無視されます。
+     * 
+     * @param array|\Traversable $iterable 追加する反復可能な値。
      * @return bool このセットの内容が変更された場合true、そうでない場合false。
      */
-    public function addAll(Collection $c): bool;
+    public function addAll($iterable): bool;
     
     /**
      * 指定された要素がこのセットに存在するか調べます。

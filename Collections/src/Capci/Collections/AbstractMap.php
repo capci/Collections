@@ -67,8 +67,8 @@ abstract class AbstractMap extends AbstractCollection implements Map {
     /**
      * {@inheritdoc}
      */
-    public function putAll(Map $m) {
-        foreach ($m as $key => $value) {
+    public function putAll($iterable) {
+        foreach ($iterable as $key => $value) {
             $this->put($key, $value);
         }
     }

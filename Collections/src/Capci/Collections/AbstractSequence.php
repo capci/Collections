@@ -45,8 +45,8 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * {@inheritdoc}
      */
-    public function addAll(Collection $c) {
-        foreach ($c as $e) {
+    public function addAll($iterable) {
+        foreach ($iterable as $e) {
             $this->add($e);
         } 
     }

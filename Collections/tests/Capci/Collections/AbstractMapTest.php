@@ -142,6 +142,32 @@ class AbstractMapTest extends \PHPUnit_Framework_TestCase
         $m->put(6, 6);
         $this->object->putAll($m);
         $this->assertSameEntriesSet([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]], $this->object);
+        
+        $this->object->clear();
+        $m->clear();
+        $this->object->put(1, 1);
+        $this->object->put(2, 2);
+        $this->object->put(3, 3);
+        $m->put(1, 4);
+        $m->put(2, 5);
+        $m->put(3, 6);
+        $this->object->putAll($m);
+        $this->assertSameEntriesSet([[1, 4], [2, 5], [3, 6]], $this->object);
+        
+        $this->object->clear();
+        $this->object->put(1, 1);
+        $this->object->put(2, 2);
+        $this->object->put(3, 3);
+        $this->object->putAll([4 => 4, 5 => 5, 6 => 6]);
+        $this->assertSameEntriesSet([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]], $this->object);
+        
+        $this->object->clear();
+        $m->clear();
+        $this->object->put(1, 1);
+        $this->object->put(2, 2);
+        $this->object->put(3, 3);
+        $this->object->putAll([1 => 4, 2 => 5, 3 => 6]);
+        $this->assertSameEntriesSet([[1, 4], [2, 5], [3, 6]], $this->object);
     }
     
     public function testGet() {
