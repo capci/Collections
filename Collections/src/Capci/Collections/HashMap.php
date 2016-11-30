@@ -210,16 +210,19 @@ class HashMap extends AbstractMap {
      * {@inheritdoc}
      */
     public function filter(\Closure $predicate) {
-        $newTable = $this->createTable($newSize = count($this->table));
+        $newTable = $this->createTable(count($this->table));
         
         $count = 0;
-        foreach ($this as $key => $value) {
-            if($predicate($key, $value)) {
-                $index = $this->indexFor($key, $newSize);
-                $newTable[$index][] = $key;
-                $newTable[$index][] = $value;
-                ++$count;
+        foreach ($this->table as $index => $list) {
+            $newList = [];
+            for($i = 0, $len = count($list); $i < $len; $i += 2) {
+                if($predicate($list[$i], $list[$i + 1])) {
+                    $newList[] = $list[$i];
+                    $newList[] = $list[$i + 1];
+                    ++$count;
+                }
             }
+            $newTable[$index] = $newList;
         }
         
         $this->table = $newTable;

@@ -173,18 +173,21 @@ class HashSet extends AbstractSet {
      * {@inheritdoc}
      */
     public function filter(\Closure $predicate) {
-        $newTable = $this->createTable($newSize = count($this->table));
+        $newTable = $this->createTable(count($this->table));
         
-        $newCount = 0;
-        foreach ($this as $e) {
-            if($predicate($e)) {
-                $index = $this->indexFor($e, $newSize);
-                $newTable[$index][] = $e;
-                ++$newCount;
+        $count = 0;
+        foreach ($this->table as $index => $list) {
+            $newList = [];
+            foreach ($list as $e) {
+                if($predicate($e)) {
+                    $newList[] = $e;
+                    ++$count;
+                }
             }
+            $newTable[$index] = $newList;
         }
         
         $this->table = $newTable;
-        $this->count = $newCount;
+        $this->count = $count;
     }
 }

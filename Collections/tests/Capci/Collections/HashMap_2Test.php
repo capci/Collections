@@ -249,4 +249,17 @@ class HashMap_2Test extends \PHPUnit_Framework_TestCase
         
         $this->assertFalse(isset($this->object[-1]));
     }
+    
+    public function testFilter() {
+        $this->object->filter(function($key, $value) {
+            return is_numeric($value);
+        });
+        $expected = [];
+        foreach ($this->entries as list($key, $value)) {
+            if(is_numeric($value)) {
+                $expected[] = [$key, $value];
+            }
+        }
+        $this->assertSameEntries($expected, $this->object->toArray());
+    }
 }

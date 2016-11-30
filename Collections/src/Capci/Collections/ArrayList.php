@@ -155,6 +155,8 @@ class ArrayList extends AbstractSequence {
      * {@inheritdoc}
      */
     public function filter(\Closure $predicate) {
-        $this->array = array_values(array_filter($this->array, $predicate, ARRAY_FILTER_USE_BOTH));
+        $this->array = array_values(array_filter($this->array, function($e, $i) use($predicate) {
+            return $predicate($i, $e);
+        }, ARRAY_FILTER_USE_BOTH));
     }
 }

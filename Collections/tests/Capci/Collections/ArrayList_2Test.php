@@ -293,4 +293,11 @@ class ArrayList_2Test extends \PHPUnit_Framework_TestCase
         usort($this->elements, $comparator);
         $this->assertSame($this->elements, $this->object->toArray());
     }
+    
+    public function testFilter() {
+        $this->object->filter(function($i, $e) {
+            return is_numeric($e);
+        });
+        $this->assertSame([0, 123, PHP_INT_MAX, PHP_INT_MIN, 0.0, 1.23, INF], $this->object->toArray());
+    }
 }

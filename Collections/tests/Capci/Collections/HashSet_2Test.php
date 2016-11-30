@@ -149,4 +149,11 @@ class HashSet_2Test extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->removeAll($this->object));
         $this->assertTrue($this->object->isEmpty());
     }
+    
+    public function testFilter() {
+        $this->object->filter(function($e) {
+            return is_numeric($e);
+        });
+        $this->assertSameSet([0, 123, PHP_INT_MAX, PHP_INT_MIN, 0.0, 1.23, INF], $this->object->toArray());
+    }
 }
