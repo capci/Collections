@@ -488,4 +488,14 @@ class AbstractMapTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->object[6]));
         $this->assertFalse(isset($this->object['foo']));
     }
+    
+    public function testFilter() {
+        foreach(range(-10, 10) as $i) {
+            $this->object->put($i, $i);
+        }
+        $this->object->filter(function($k, $v) {
+            return $v % 2 === 0;
+        });
+        $this->assertSameEntriesSet([[-10, -10], [-8, -8], [-6, -6], [-4, -4], [-2, -2], [0, 0], [2, 2], [4, 4], [6, 6], [8, 8], [10, 10]], $this->object);
+    }
 }

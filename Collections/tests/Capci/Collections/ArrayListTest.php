@@ -485,4 +485,23 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
             $this->assertSame([1, 2, null, 4, 5], $this->object->toArray());
         }
     }
+    
+    public function testSort() {
+        $r = range(-10, 10);
+        shuffle($r);
+        $this->object->addAll($r);
+        $this->object->sort(function($v1, $v2) {
+            return $v1 - $v2;
+        });
+        $this->assertSame(range(-10, 10), $this->object->toArray());
+    }
+    
+    public function testFilter() {
+        $r = range(-10, 10);
+        $this->object->addAll($r);
+        $this->object->filter(function($i, $e) {
+            return $e % 2 === 0;
+        });
+        $this->assertSame([-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10], $this->object->toArray());
+    }
 }

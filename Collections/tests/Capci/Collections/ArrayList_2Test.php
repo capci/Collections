@@ -268,4 +268,29 @@ class ArrayList_2Test extends \PHPUnit_Framework_TestCase
         
         $this->assertFalse(isset($this->object[$this->object->count()]));
     }
+    
+    public function testSort() {
+        $comparer = $this->object->getEqualityComparer();
+        $comparator = function($e1, $e2) use($comparer) {
+            $h1 = $comparer->elementHashCode($e1);
+            $h2 = $comparer->elementHashCode($e2);
+            if($h1 > $h2) {
+                return 1;
+            } else if($h1 < $h2) {
+                return -1;
+            }
+            
+            $h1 = $comparer->elementHashCode(gettype($e1));
+            $h2 = $comparer->elementHashCode(gettype($e2));
+            if($h1 > $h2) {
+                return 1;
+            } else if($h1 < $h2) {
+                return -1;
+            }
+            return 0;
+        };
+        $this->object->sort($comparator);
+        usort($this->elements, $comparator);
+        $this->assertSame($this->elements, $this->object->toArray());
+    }
 }

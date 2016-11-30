@@ -240,4 +240,12 @@ class AbstractSetTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->removeAll($c));
         $this->assertSameSet([1, 2, null, 4, 5], $this->object->toArray());
     }
+    
+    public function testFilter() {
+        $this->object->addAll(range(-10, 10));
+        $this->object->filter(function($e) {
+            return $e % 2 === 0;
+        });
+        $this->assertSameSet([-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10], $this->object->toArray());
+    }
 }

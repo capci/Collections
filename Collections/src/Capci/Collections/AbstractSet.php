@@ -91,4 +91,18 @@ abstract class AbstractSet extends AbstractCollection implements Set {
         }
         return $modified;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $filterd = [];
+        foreach ($this as $e) {
+            if($predicate($e)) {
+                $filterd[] = $e;
+            }
+        }
+        $this->clear();
+        $this->addAll($filterd);
+    }
 }

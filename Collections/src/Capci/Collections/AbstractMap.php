@@ -162,4 +162,20 @@ abstract class AbstractMap extends AbstractCollection implements Map {
         }
         return $this->get($key) !== null;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $filterd = [];
+        foreach ($this as $key => $value) {
+            if($predicate($key, $value)) {
+                $filterd[] = [$key, $value];
+            }
+        }
+        $this->clear();
+        foreach ($filterd as list($key, $value)) {
+            $this->put($key, $value);
+        }
+    }
 }

@@ -168,4 +168,23 @@ class HashSet extends AbstractSet {
         }
         return false;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $newTable = $this->createTable($newSize = count($this->table));
+        
+        $newCount = 0;
+        foreach ($this as $e) {
+            if($predicate($e)) {
+                $index = $this->indexFor($e, $newSize);
+                $newTable[$index][] = $e;
+                ++$newCount;
+            }
+        }
+        
+        $this->table = $newTable;
+        $this->count = $newCount;
+    }
 }

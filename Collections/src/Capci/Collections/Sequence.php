@@ -201,4 +201,30 @@ interface Sequence extends Collection, \ArrayAccess {
      * @return bool 指定した位置に要素が存在し、かつその要素がnullでない場合true、そうでない場合false。
      */
     public function offsetExists($index);
+    
+    /**
+     * このシーケンスを指定した比較関数を用いて順序付けし、並べ替えます。
+     * 
+     * 比較関数には2つの要素が引数で渡されます。次のルールに従って実装してください。
+     * <ul>
+     * <li>第1要素が第2要素より小さければ負の整数値。</li>
+     * <li>第1要素が第2要素より大きければ正の整数値。</li>
+     * <li>第1要素と第2要素が同じであれば0。</li>
+     * </ul>
+     * 
+     * @param \Closure $comparator 比較関数。
+     */
+    public function sort(\Closure $comparator);
+    
+    /**
+     * このシーケンスを指定したフィルタ関数を用いてフィルタリングします。
+     * 
+     * フィルタ関数でtrueが返された要素のみこのコレクションに残されます。
+     * 
+     * フィルタ関数の引数にはインデックスと要素が渡されます。
+     * 
+     * @param \Closure $predicate フィルタ関数。
+     */
+    public function filter(\Closure $predicate);
+    
 }

@@ -220,4 +220,75 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
         }
         return false;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function sort(\Closure $comparator) {
+        $this->quickSort(0, $this->count() - 1, $comparator);
+    }
+    
+    private function quickSort(int $left, int $right, \Closure $comparator) {
+        if($left >= $right) {
+            return;
+        }
+        
+        $i = $left;
+        $j = $right;
+        
+        $v1 = $this->get($i);
+        $v2 = $this->get($i + (int)(($j - $i) / 2));
+        $v3 = $this->get($j);
+        
+        if($comparator($v1, $v2) < 0) {
+            if($comparator($v2, $v3) < 0) {
+                $pivot = $v2;
+            } else if($comparator($v3, $v1) < 0) {
+                $pivot = $v1;
+            } else {
+                $pivot = $v3;
+            }
+        } else {
+            if($comparator($v3, $v2) < 0) {
+                $pivot = $v2;
+            } else if($comparator($v1, $v3) < 0) {
+                $pivot = $v1;
+            } else {
+                $pivot = $v3;
+            }
+        }
+        
+        while(true) {
+            while($comparator($v1 = $this->get($i), $pivot) < 0) {
+                ++$i;
+            }
+            while($comparator($pivot, $v3 = $this->get($j)) < 0) {
+                --$j;
+            }
+            if($i >= $j) {
+                break;
+            }
+            $this->set($i, $v3);
+            $this->set($j, $v1);
+            ++$i;
+            --$j;
+        }
+        
+        $this->quickSort($left, $i - 1, $comparator);
+        $this->quickSort($j + 1, $right, $comparator);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $filterd = [];
+        foreach ($this as $i => $e) {
+            if($predicate($i, $e)) {
+                $filterd[] = $e;
+            }
+        }
+        $this->clear();
+        $this->addAll($filterd);
+    }
 }

@@ -68,4 +68,15 @@ interface Set extends Collection {
      * @return bool このセットの内容が変更された場合true、そうでない場合false。
      */
     public function removeAll(Collection $c): bool;
+    
+    /**
+     * このセットを指定したフィルタ関数を用いてフィルタリングします。
+     * 
+     * フィルタ関数でtrueが返された要素のみこのコレクションに残されます。
+     * 
+     * フィルタ関数の引数には要素が渡されます。
+     * 
+     * @param \Closure $predicate フィルタ関数。
+     */
+    public function filter(\Closure $predicate);
 }

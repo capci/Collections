@@ -205,4 +205,24 @@ class HashMap extends AbstractMap {
         }
         return false;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $newTable = $this->createTable($newSize = count($this->table));
+        
+        $count = 0;
+        foreach ($this as $key => $value) {
+            if($predicate($key, $value)) {
+                $index = $this->indexFor($key, $newSize);
+                $newTable[$index][] = $key;
+                $newTable[$index][] = $value;
+                ++$count;
+            }
+        }
+        
+        $this->table = $newTable;
+        $this->count = $count;
+    }
 }

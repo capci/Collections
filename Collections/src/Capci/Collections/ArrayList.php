@@ -143,4 +143,18 @@ class ArrayList extends AbstractSequence {
         $subSequence->array = array_slice($this->array, $index, $count);
         return $subSequence;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function sort(\Closure $comparator) {
+        usort($this->array, $comparator);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function filter(\Closure $predicate) {
+        $this->array = array_values(array_filter($this->array, $predicate, ARRAY_FILTER_USE_BOTH));
+    }
 }

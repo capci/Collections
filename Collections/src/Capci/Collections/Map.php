@@ -184,4 +184,15 @@ interface Map extends Collection, \ArrayAccess {
      * @return bool このマップに指定したキーの関連付けが存在しかつその要素がnullでない場合true、そうでない場合false。
      */
     public function offsetExists($key);
+    
+    /**
+     * このマップを指定したフィルタ関数を用いてフィルタリングします。
+     * 
+     * フィルタ関数でtrueが返された要素のみこのコレクションに残されます。
+     * 
+     * フィルタ関数の引数にはキーと値が渡されます。
+     * 
+     * @param \Closure $predicate フィルタ関数。
+     */
+    public function filter(\Closure $predicate);
 }
