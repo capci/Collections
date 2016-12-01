@@ -300,4 +300,29 @@ class ArrayList_2Test extends \PHPUnit_Framework_TestCase
         });
         $this->assertSame([0, 123, PHP_INT_MAX, PHP_INT_MIN, 0.0, 1.23, INF], $this->object->toArray());
     }
+    
+    public function testShuffle() {
+        //$this->markTestSkipped('テストの実行に時間を消費するため、保留にしています。');
+        
+        $sums = array_fill(0, count($this->elements), 0);
+        
+        $numOfTrials = 500;
+        for($n = 0; $n < $numOfTrials; ++$n) {
+            $this->object->shuffle();
+            foreach ($this->object as $i => $e) {
+                $index = array_search($e, $this->elements, true);
+                $sums[$index] += $i;
+            }
+        }
+        $avgs = [];
+        foreach ($sums as $index => $sum) {
+            $avgs[$index] = $sum / $numOfTrials;
+        }
+        
+        $center = (count($this->elements) - 1) / 2;
+        $d = 1.0;
+        foreach ($avgs as $avg) {
+            $this->assertTrue(abs($avg - $center) < $d);
+        }
+    }
 }

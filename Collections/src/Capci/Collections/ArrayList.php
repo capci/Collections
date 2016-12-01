@@ -159,4 +159,11 @@ class ArrayList extends AbstractSequence {
             return $predicate($i, $e);
         }, ARRAY_FILTER_USE_BOTH));
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function shuffle() {
+        shuffle($this->array);
+    }
 }

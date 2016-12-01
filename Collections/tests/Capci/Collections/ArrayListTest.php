@@ -504,4 +504,35 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         });
         $this->assertSame([-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10], $this->object->toArray());
     }
+    
+    public function testShuffle() {
+        $this->markTestSkipped('テストの実行に時間を消費するため、保留にしています。');
+        
+        $sums = [];
+        $min = -10;
+        $max = 10;
+        foreach (range($min, $max) as $i) {
+            $sums[$i] = 0;
+        }
+        
+        $numOfTrials = 500;
+        for($n = 0; $n < $numOfTrials; ++$n) {
+            $this->object->clear();
+            $this->object->addAll(range($min, $max));
+            $this->object->shuffle();
+            foreach ($this->object as $i => $e) {
+                $sums[$e] += $i;
+            }
+        }
+        $avgs = [];
+        foreach ($sums as $e => $sum) {
+            $avgs[$e] = $sum / $numOfTrials;
+        }
+        
+        $center = ($max - $min) / 2;
+        $d = 1.0;
+        foreach ($avgs as $avg) {
+            $this->assertTrue(abs($avg - $center) < $d);
+        }
+    }
 }

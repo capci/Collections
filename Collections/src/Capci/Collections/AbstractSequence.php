@@ -291,4 +291,16 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
         $this->clear();
         $this->addAll($filterd);
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function shuffle() {
+        for($i = $this->count() - 1; $i > 0; --$i) {
+            $j = mt_rand(0, $i);
+            $tmp = $this->get($j);
+            $this->set($j, $this->get($i));
+            $this->set($i, $tmp);
+        }
+    }
 }

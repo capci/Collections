@@ -227,4 +227,9 @@ interface Sequence extends Collection, \ArrayAccess {
      */
     public function filter(\Closure $predicate);
     
+    /**
+     * このシーケンスの順序をランダムに並べ替えます。
+     */
+    public function shuffle();
+    
 }
