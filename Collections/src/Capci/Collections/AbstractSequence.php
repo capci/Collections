@@ -284,7 +284,7 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     public function filter(\Closure $predicate) {
         $filterd = [];
         foreach ($this as $i => $e) {
-            if($predicate($i, $e)) {
+            if($predicate($i, $e) === true) {
                 $filterd[] = $e;
             }
         }

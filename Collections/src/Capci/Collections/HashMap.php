@@ -216,7 +216,7 @@ class HashMap extends AbstractMap {
         foreach ($this->table as $index => $list) {
             $newList = [];
             for($i = 0, $len = count($list); $i < $len; $i += 2) {
-                if($predicate($list[$i], $list[$i + 1])) {
+                if($predicate($list[$i], $list[$i + 1]) === true) {
                     $newList[] = $list[$i];
                     $newList[] = $list[$i + 1];
                     ++$count;

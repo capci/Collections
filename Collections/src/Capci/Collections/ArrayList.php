@@ -162,7 +162,7 @@ class ArrayList extends AbstractSequence {
      */
     public function filter(\Closure $predicate) {
         $this->array = array_values(array_filter($this->array, function($e, $i) use($predicate) {
-            return $predicate($i, $e);
+            return $predicate($i, $e) === true;
         }, ARRAY_FILTER_USE_BOTH));
     }
     

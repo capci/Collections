@@ -169,7 +169,7 @@ abstract class AbstractMap extends AbstractCollection implements Map {
     public function filter(\Closure $predicate) {
         $filterd = [];
         foreach ($this as $key => $value) {
-            if($predicate($key, $value)) {
+            if($predicate($key, $value) === true) {
                 $filterd[] = [$key, $value];
             }
         }

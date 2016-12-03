@@ -98,7 +98,7 @@ abstract class AbstractSet extends AbstractCollection implements Set {
     public function filter(\Closure $predicate) {
         $filterd = [];
         foreach ($this as $e) {
-            if($predicate($e)) {
+            if($predicate($e) === true) {
                 $filterd[] = $e;
             }
         }

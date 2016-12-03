@@ -179,7 +179,7 @@ class HashSet extends AbstractSet {
         foreach ($this->table as $index => $list) {
             $newList = [];
             foreach ($list as $e) {
-                if($predicate($e)) {
+                if($predicate($e) === true) {
                     $newList[] = $e;
                     ++$count;
                 }
