@@ -153,17 +153,26 @@ class ArrayList extends AbstractSequence {
     /**
      * {@inheritdoc}
      */
-    public function sort(\Closure $comparator) {
-        usort($this->array, $comparator);
+    public function filter(\Closure $predicate) {
+        $this->array = array_values(array_filter($this->array, function($e, $i) use($predicate) {
+            return $predicate($i, $e) === true;
+        }, ARRAY_FILTER_USE_BOTH));
     }
     
     /**
      * {@inheritdoc}
      */
-    public function filter(\Closure $predicate) {
-        $this->array = array_values(array_filter($this->array, function($e, $i) use($predicate) {
-            return $predicate($i, $e) === true;
-        }, ARRAY_FILTER_USE_BOTH));
+    public function map(\Closure $mapper) {
+        foreach ($this->array as $i => $e) {
+            $this->array[$i] = $mapper($i, $e);
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function sort(\Closure $comparator) {
+        usort($this->array, $comparator);
     }
     
     /**

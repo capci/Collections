@@ -190,4 +190,34 @@ class HashSet extends AbstractSet {
         $this->table = $newTable;
         $this->count = $count;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function map(\Closure $mapper) {
+        $newTable = $this->createTable($size = count($this->table));
+        
+        $count = 0;
+        foreach ($this as $e) {
+            $e = $mapper($e);
+            $index = $this->indexFor($e, $size);
+            
+            $found = false;
+            foreach ($newTable[$index] as $element) {
+                if($this->elementsEquals($e, $element)) {
+                    $found = true;
+                    break;
+                }
+            }
+            if($found) {
+                continue;
+            }
+                
+            $newTable[$index][] = $e;
+            ++$count;
+        }
+        
+        $this->table = $newTable;
+        $this->count = $count;
+    }
 }

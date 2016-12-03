@@ -375,4 +375,18 @@ class HashMapTest extends \PHPUnit_Framework_TestCase
         });
         $this->assertSameEntriesSet([[-10, -10], [-8, -8], [-6, -6], [-4, -4], [-2, -2], [0, 0], [2, 2], [4, 4], [6, 6], [8, 8], [10, 10]], $this->object);
     }
+    
+    public function testMap() {
+        foreach(range(-10, 10) as $i) {
+            $this->object->put($i, $i);
+        }
+        $this->object->map(function($k, $v) {
+            return $v * 2;
+        });
+        $expected = [];
+        foreach(range(-10, 10) as $i) {
+            $expected[] = [$i, $i * 2];
+        }
+        $this->assertSameEntriesSet($expected, $this->object);
+    }
 }

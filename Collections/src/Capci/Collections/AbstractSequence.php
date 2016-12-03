@@ -224,6 +224,32 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * {@inheritdoc}
      */
+    public function filter(\Closure $predicate) {
+        $filterd = [];
+        foreach ($this as $i => $e) {
+            if($predicate($i, $e) === true) {
+                $filterd[] = $e;
+            }
+        }
+        $this->clear();
+        $this->addAll($filterd);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function map(\Closure $mapper) {
+        $mapped = [];
+        foreach ($this as $i => $e) {
+            $mapped[] = $mapper($i, $e);
+        }
+        $this->clear();
+        $this->addAll($mapped);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function sort(\Closure $comparator) {
         $this->quickSort(0, $this->count() - 1, $comparator);
     }
@@ -276,20 +302,6 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
         
         $this->quickSort($left, $i - 1, $comparator);
         $this->quickSort($j + 1, $right, $comparator);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function filter(\Closure $predicate) {
-        $filterd = [];
-        foreach ($this as $i => $e) {
-            if($predicate($i, $e) === true) {
-                $filterd[] = $e;
-            }
-        }
-        $this->clear();
-        $this->addAll($filterd);
     }
     
     /**

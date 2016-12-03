@@ -154,6 +154,26 @@ class HashSet_2Test extends \PHPUnit_Framework_TestCase
         $this->object->filter(function($e) {
             return is_numeric($e);
         });
-        $this->assertSameSet([0, 123, PHP_INT_MAX, PHP_INT_MIN, 0.0, 1.23, INF], $this->object->toArray());
+        $expected = [];
+        foreach ($this->elements as $e) {
+            if(is_numeric($e)) {
+                $expected[] = $e;
+            }
+        }
+        $this->assertSameSet($expected, $this->object->toArray());
+    }
+    
+    public function testMap() {
+        $this->object->map(function($e) {
+            return gettype($e);
+        });
+        $expected = [];
+        foreach ($this->elements as $e) {
+            $type = gettype($e);
+            if(!in_array($type, $expected, true)) {
+                $expected[] = $type;
+            }
+        }
+        $this->assertSameSet($expected, $this->object->toArray());
     }
 }

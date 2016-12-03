@@ -733,6 +733,19 @@ class AbstractSequenceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10], $this->object->toArray());
     }
     
+    public function testMap() {
+        $r = range(-10, 10);
+        $this->object->addAll($r);
+        $this->object->map(function($i, $e) {
+            return $e * 2;
+        });
+        $expected = [];
+        foreach ($r as $i) {
+            $expected[] = $i * 2;
+        }
+        $this->assertSame($expected, $this->object->toArray());
+    }
+    
     public function testShuffle() {
         $this->markTestSkipped('テストの実行に時間を消費するため、保留にしています。');
         

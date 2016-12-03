@@ -178,4 +178,18 @@ abstract class AbstractMap extends AbstractCollection implements Map {
             $this->put($key, $value);
         }
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function map(\Closure $mapper) {
+        $mapped = [];
+        foreach ($this as $key => $value) {
+            $mapped[] = [$key, $mapper($key, $value)];
+        }
+        $this->clear();
+        foreach ($mapped as list($key, $value)) {
+            $this->put($key, $value);
+        }
+    }
 }

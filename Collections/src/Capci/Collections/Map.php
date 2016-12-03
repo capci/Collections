@@ -195,4 +195,15 @@ interface Map extends Collection, \ArrayAccess {
      * @param \Closure $predicate フィルタ関数。
      */
     public function filter(\Closure $predicate);
+    
+    /**
+     * このマップの全要素に指定したマッパー関数を適用し、値を変換します。
+     * 
+     * マッパー関数の戻り値が新しい要素となります。
+     * 
+     * マッパー関数の引数にはキーと値が渡されます。
+     * 
+     * @param \Closure $mapper マッパー関数。
+     */
+    public function map(\Closure $mapper);
 }

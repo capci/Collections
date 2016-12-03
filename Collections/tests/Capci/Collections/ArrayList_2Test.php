@@ -298,7 +298,24 @@ class ArrayList_2Test extends \PHPUnit_Framework_TestCase
         $this->object->filter(function($i, $e) {
             return is_numeric($e);
         });
-        $this->assertSame([0, 123, PHP_INT_MAX, PHP_INT_MIN, 0.0, 1.23, INF], $this->object->toArray());
+        $expected = [];
+        foreach ($this->elements as $e) {
+            if(is_numeric($e)) {
+                $expected[] = $e;
+            }
+        }
+        $this->assertSame($expected, $this->object->toArray());
+    }
+    
+    public function testMap() {
+        $this->object->map(function($i, $e) {
+            return gettype($e);
+        });
+        $expected = [];
+        foreach ($this->elements as $e) {
+            $expected[] = gettype($e);
+        }
+        $this->assertSame($expected, $this->object->toArray());
     }
     
     public function testShuffle() {

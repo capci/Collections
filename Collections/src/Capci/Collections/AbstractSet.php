@@ -105,4 +105,16 @@ abstract class AbstractSet extends AbstractCollection implements Set {
         $this->clear();
         $this->addAll($filterd);
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function map(\Closure $mapper) {
+        $mapped = [];
+        foreach ($this as $e) {
+            $mapped[] = $mapper($e);
+        }
+        $this->clear();
+        $this->addAll($mapped);
+    }
 }

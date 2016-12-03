@@ -227,4 +227,13 @@ class HashSetTest extends \PHPUnit_Framework_TestCase
         });
         $this->assertSameSet([-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10], $this->object->toArray());
     }
+    
+    public function testMap() {
+        $r = range(-10, 10);
+        $this->object->addAll($r);
+        $this->object->map(function($e) {
+            return intval($e / 2);
+        });
+        $this->assertSameSet(range(-5, 5), $this->object->toArray());
+    }
 }

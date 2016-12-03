@@ -207,6 +207,28 @@ interface Sequence extends Collection, \ArrayAccess {
     public function offsetExists($index);
     
     /**
+     * このシーケンスを指定したフィルタ関数を用いてフィルタリングします。
+     * 
+     * フィルタ関数でtrueが返された要素のみこのコレクションに残されます。
+     * 
+     * フィルタ関数の引数にはインデックスと要素が渡されます。
+     * 
+     * @param \Closure $predicate フィルタ関数。
+     */
+    public function filter(\Closure $predicate);
+    
+    /**
+     * このシーケンスの全要素に指定したマッパー関数を適用し、値を変換します。
+     * 
+     * マッパー関数の戻り値が新しい要素となります。
+     * 
+     * マッパー関数の引数にはインデックスと要素が渡されます。
+     * 
+     * @param \Closure $mapper マッパー関数。
+     */
+    public function map(\Closure $mapper);
+
+    /**
      * このシーケンスを指定した比較関数を用いて順序付けし、並べ替えます。
      * 
      * 比較関数には2つの要素が引数で渡されます。次のルールに従って実装してください。
@@ -219,17 +241,6 @@ interface Sequence extends Collection, \ArrayAccess {
      * @param \Closure $comparator 比較関数。
      */
     public function sort(\Closure $comparator);
-    
-    /**
-     * このシーケンスを指定したフィルタ関数を用いてフィルタリングします。
-     * 
-     * フィルタ関数でtrueが返された要素のみこのコレクションに残されます。
-     * 
-     * フィルタ関数の引数にはインデックスと要素が渡されます。
-     * 
-     * @param \Closure $predicate フィルタ関数。
-     */
-    public function filter(\Closure $predicate);
     
     /**
      * このシーケンスの順序をランダムに並べ替えます。

@@ -228,4 +228,15 @@ class HashMap extends AbstractMap {
         $this->table = $newTable;
         $this->count = $count;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function map(\Closure $mapper) {
+        foreach ($this->table as &$list) {
+            for($i = 0, $len = count($list); $i < $len; $i += 2) {
+                $list[$i + 1] = $mapper($list[$i], $list[$i + 1]);
+            }
+        }
+    }
 }

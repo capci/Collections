@@ -262,4 +262,19 @@ class HashMap_2Test extends \PHPUnit_Framework_TestCase
         }
         $this->assertSameEntries($expected, $this->object->toArray());
     }
+    
+    public function testMap() {
+        $this->object->map(function($key, $value) {
+            return is_numeric($value) ? $value * 2 : $value;
+        });
+        $expected = [];
+        foreach ($this->entries as list($key, $value)) {
+            if(is_numeric($value)) {
+                $expected[] = [$key, $value * 2];
+            } else {
+                $expected[] = [$key, $value];
+            }
+        }
+        $this->assertSameEntries($expected, $this->object->toArray());
+    }
 }
