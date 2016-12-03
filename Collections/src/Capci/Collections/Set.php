@@ -46,12 +46,14 @@ interface Set extends Collection {
     public function contains($e): bool;
     
     /**
-     * このセットに指定したコレクションの全要素が含まれているか調べます。
+     * このセットに指定した反復可能な値（arrayもしくはTraversalオブジェクト）の全要素が含まれているか調べます。
      * 
-     * @param Collection $c 調べるコレクション。
-     * @return bool このセットに指定したコレクションの全要素が含まれている場合true、そうでない場合false。
+     * 調査されるのは値のみで、キーは無視されます。
+     * 
+     * @param array|\Traversable $iterable 調べる反復可能な値。
+     * @return bool このセットに指定した反復可能な値の全要素が含まれている場合true、そうでない場合false。
      */
-    public function containsAll(Collection $c): bool;
+    public function containsAll($iterable): bool;
 
     /**
      * このセットから指定した要素を削除します。
@@ -62,12 +64,14 @@ interface Set extends Collection {
     public function remove($e): bool;
     
     /**
-     * このセットから指定したコレクションの全ての要素を削除します。
+     * このセットから指定した反復可能な値（arrayもしくはTraversalオブジェクト）の全ての要素を削除します。
      * 
-     * @param Collection $c 削除するコレクション。
+     * 削除されるのは値のみで、キーは無視されます。
+     * 
+     * @param array|\Traversable $iterable 削除する反復可能な値。
      * @return bool このセットの内容が変更された場合true、そうでない場合false。
      */
-    public function removeAll(Collection $c): bool;
+    public function removeAll($iterable): bool;
     
     /**
      * このセットを指定したフィルタ関数を用いてフィルタリングします。

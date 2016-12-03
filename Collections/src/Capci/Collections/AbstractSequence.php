@@ -77,8 +77,8 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * {@inheritdoc}
      */
-    public function insertAll(int $index, Collection $c) {
-        foreach ($c as $e) {
+    public function insertAll(int $index, $iterable) {
+        foreach ($iterable as $e) {
             $this->insert($index++, $e);
         }
     }
@@ -142,8 +142,8 @@ abstract class AbstractSequence extends AbstractCollection implements Sequence {
     /**
      * {@inheritdoc}
      */
-    public function containsAll(Collection $c): bool {
-        foreach ($c as $e) {
+    public function containsAll($iterable): bool {
+        foreach ($iterable as $e) {
             if(!$this->contains($e)) {
                 return false;
             }

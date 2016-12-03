@@ -44,13 +44,15 @@ interface Sequence extends Collection, \ArrayAccess {
     public function insert(int $index, $e);
     
     /**
-     * このシーケンスの指定した位置に指定したコレクションの全要素を挿入します。
+     * 指定した反復可能な値（arrayもしくはTraversalオブジェクト）に対しforeachで取得できる順番で、このシーケンスの指定した位置に要素を挿入します。
+     * 
+     * 挿入されるのは値のみで、キーは無視されます。
      * 
      * @param int $index 挿入する位置。
-     * @param \Capci\Collections\Collection $c 挿入するコレクション。
+     * @param array|\Traversable $iterable 挿入する反復可能な値。
      * @throws \OutOfRangeException インデックスが範囲外の場合（$index < 0 || $index > count()）。
      */
-    public function insertAll(int $index, Collection $c);
+    public function insertAll(int $index, $iterable);
     
     /**
      * このシーケンスの指定した位置の要素を返します。
@@ -118,15 +120,17 @@ interface Sequence extends Collection, \ArrayAccess {
     public function contains($e): bool;
     
     /**
-     * このシーケンスに指定したコレクションの全要素が含まれているか調べます。
+     * このシーケンスに指定した反復可能な値（arrayもしくはTraversalオブジェクト）の全要素が含まれているか調べます。
+     * 
+     * 調査されるのは値のみで、キーは無視されます。
      * 
      * このメソッドはelementsEqualsメソッドの実装に影響を受けます。
      * @see Sequence::elementsEquals($e1, $e2)
      * 
-     * @param Collection $c 調べるコレクション。
-     * @return bool このシーケンスに指定したコレクションの全要素が含まれている場合true、そうでない場合false。
+     * @param array|\Traversable $iterable 調べる反復可能な値。
+     * @return bool このシーケンスに指定した反復可能な値の全要素が含まれている場合true、そうでない場合false。
      */
-    public function containsAll(Collection $c): bool;
+    public function containsAll($iterable): bool;
     
     /**
      * このシーケンスで指定した要素が最初に検出された位置を返します。

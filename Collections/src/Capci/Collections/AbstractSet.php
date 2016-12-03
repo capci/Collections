@@ -70,8 +70,8 @@ abstract class AbstractSet extends AbstractCollection implements Set {
     /**
      * {@inheritdoc}
      */
-    public function containsAll(Collection $c): bool {
-        foreach ($c as $e) {
+    public function containsAll($iterable): bool {
+        foreach ($iterable as $e) {
             if(!$this->contains($e)) {
                 return false;
             }
@@ -82,9 +82,9 @@ abstract class AbstractSet extends AbstractCollection implements Set {
     /**
      * {@inheritdoc}
      */
-    public function removeAll(Collection $c): bool {
+    public function removeAll($iterable): bool {
         $modified = false;
-        foreach ($c as $e) {
+        foreach ($iterable as $e) {
             if($this->remove($e)) {
                 $modified = true;
             }

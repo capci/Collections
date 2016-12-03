@@ -273,6 +273,61 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    public function testInsertAll2() {
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->object->insertAll(0, ['foo', null, 'bar']);
+        $this->assertSame(['foo', null, 'bar', 1, 2, 3, 4, 5], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->object->insertAll(2, ['foo', null, 'bar']);
+        $this->assertSame([1, 2, 'foo', null, 'bar', 3, 4, 5], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->object->insertAll(5, ['foo', null, 'bar']);
+        $this->assertSame([1, 2, 3, 4, 5, 'foo', null, 'bar'], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        try {
+            $this->object->insertAll(-1, ['foo', null, 'bar']);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->toArray());
+        }
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        try {
+            $this->object->insertAll(6, ['foo', null, 'bar']);
+            $this->fail();
+        } catch (\OutOfRangeException $ex) {
+            $this->assertSame([1, 2, 3, 4, 5], $this->object->toArray());
+        }
+    }
+    
     public function testGet() {
         $this->object->clear();
         $this->object->add(1);

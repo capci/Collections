@@ -90,11 +90,13 @@ class ArrayList extends AbstractSequence {
     /**
      * {@inheritdoc}
      */
-    public function insertAll(int $index, Collection $c) {
+    public function insertAll(int $index, $iterable) {
         if($index < 0 || $index > $this->count()) {
             throw new \OutOfRangeException('Index is out of range: ' . $index);
         }
-        array_splice($this->array, $index, 0, $c->toArray());
+        foreach ($iterable as $e) {
+            array_splice($this->array, $index++, 0, [$e]);
+        }
     }
     
     /**

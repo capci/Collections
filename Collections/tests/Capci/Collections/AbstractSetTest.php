@@ -189,6 +189,21 @@ class AbstractSetTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->containsAll($c));
     }
     
+    public function testContainsAll2() {
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        
+        $this->assertTrue($this->object->containsAll([2, null, 4]));
+        
+        $this->assertTrue($this->object->containsAll([]));
+        
+        $this->assertFalse($this->object->containsAll([1, 2, 5, 0]));
+    }
+    
     public function testRemoveAll() {
         $c = clone $this->object;
         
@@ -238,6 +253,37 @@ class AbstractSetTest extends \PHPUnit_Framework_TestCase
         $c->add(0);
         $c->add(-1);
         $this->assertFalse($this->object->removeAll($c));
+        $this->assertSameSet([1, 2, null, 4, 5], $this->object->toArray());
+    }
+    
+    public function testRemoveAll2() {
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->assertTrue($this->object->removeAll([2, null, 4]));
+        $this->assertSameSet([1, 5], $this->object->toArray());
+        
+        $this->assertFalse($this->object->removeAll([]));
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->assertTrue($this->object->removeAll([1, 2, 5, 0]));
+        $this->assertSameSet([null, 4], $this->object->toArray());
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(null);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->assertFalse($this->object->removeAll([0, -1]));
         $this->assertSameSet([1, 2, null, 4, 5], $this->object->toArray());
     }
     
