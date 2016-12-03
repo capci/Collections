@@ -326,6 +326,19 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         } catch (\OutOfRangeException $ex) {
             $this->assertSame([1, 2, 3, 4, 5], $this->object->toArray());
         }
+        
+        $this->object->clear();
+        $this->object->add(1);
+        $this->object->add(2);
+        $this->object->add(3);
+        $this->object->add(4);
+        $this->object->add(5);
+        $this->object->insertAll(0, [
+            'k3' => 'foo', 
+            'k2' => null, 
+            'k1' => 'bar'
+        ]);
+        $this->assertSame(['foo', null, 'bar', 1, 2, 3, 4, 5], $this->object->toArray());
     }
     
     public function testGet() {

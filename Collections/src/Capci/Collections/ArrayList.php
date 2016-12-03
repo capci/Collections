@@ -94,8 +94,12 @@ class ArrayList extends AbstractSequence {
         if($index < 0 || $index > $this->count()) {
             throw new \OutOfRangeException('Index is out of range: ' . $index);
         }
-        foreach ($iterable as $e) {
-            array_splice($this->array, $index++, 0, [$e]);
+        if(is_array($iterable)) {
+            array_splice($this->array, $index, 0, $iterable);
+        } else {
+            foreach ($iterable as $e) {
+                array_splice($this->array, $index++, 0, [$e]);
+            }
         }
     }
     
