@@ -19,7 +19,7 @@ PHP7で利用可能なコレクションフレームワークです。
 * foreach構文による反復処理。
 * 要素のカウント（count、isEmpty）、クリア（clear）、配列への変換（toArray）。
 * 要素の調査（contains、containsAll）、探索（indexOf、lastIndexOf）。
-* 要素のフィルタリング（filter）、並べ替え（sort）、ランダムな並べ替え（shuffle）。
+* 要素のフィルタリング（filter）、変換（map）、並べ替え（sort）、ランダムな並べ替え（shuffle）。
 
 ### Map
 
@@ -32,7 +32,7 @@ PHP7で利用可能なコレクションフレームワークです。
 * foreach構文による反復処理。
 * 要素のカウント（count、isEmpty）、クリア（clear）、配列への変換（toArray）。
 * 要素の調査（containsKey、containsValue）。
-* 要素のフィルタリング（filter）。
+* 要素のフィルタリング（filter）、変換（map）。
 
 ### Set
 
@@ -44,7 +44,7 @@ PHP7で利用可能なコレクションフレームワークです。
 * foreach構文による反復処理。
 * 要素のカウント（count、isEmpty）、クリア（clear）、配列への変換（toArray）。
 * 要素の調査（contains、containsAll）。
-* 要素のフィルタリング（filter）。
+* 要素のフィルタリング（filter）、変換（map）。
 
 ## 基本的な使い方
 
